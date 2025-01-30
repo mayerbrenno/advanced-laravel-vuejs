@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\About\AboutController;
+use App\Http\Controllers\Contact\ContactController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,17 +17,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/about', function () {
+//     return view('about');
+// });
+
+// Route::get('/contact', function () {
+//     return view('contact');
+// });
+
+// Route::get('/', 'HomeController@home');
+
+Route::get('/', [HomeController::class, 'home']);
+
+Route::get('/home', [HomeController::class, 'home']);
+
+Route::get('/about', [AboutController::class, 'about']);
+
+Route::get('/contact', [ContactController::class, 'contact']);
+
+Route::get('/contact/{name?}', function ($paramName = "Brenno") {
+    return $paramName;
 });
-
-Route::get('/about', function () {
-    return view('welcome');
-});
-
-Route::get('/contact', function () {
-    return view('welcome');
-});
-
-
-
