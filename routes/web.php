@@ -17,28 +17,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', [HomeController::class, 'home'])->name('site.index');
 
-// Route::get('/about', function () {
-//     return view('about');
-// });
+Route::get('/about', [AboutController::class, 'about'])->name('site.about');
 
-// Route::get('/contact', function () {
-//     return view('contact');
-// });
+Route::get('/contact', [ContactController::class, 'contact'])->name('site.contact');
 
-// Route::get('/', 'HomeController@home');
+Route::get('/login', function () {
+    return view('site.login');
+})->name('site.login');
 
-Route::get('/', [HomeController::class, 'home']);
+Route::prefix("/app")->group(function () {
+    Route::get('/clients', function () {
+        return "clients";
+    })->name("app.clients");
+    Route::get('/supplier', function () {
+        return "supplier";
+    })->name("app.supplier");
+    Route::get('/products', function () {
+        return "products";
+    })->name("app.products");
+});
 
-Route::get('/home', [HomeController::class, 'home']);
+// Redirect
+// Route::get("/route1", function () {
+//     echo "route 1";
+// })->name("site.route1");
 
-Route::get('/about', [AboutController::class, 'about']);
+// Route::get("/route2", function () {
+//     return redirect()->route("site.route1");
+// })->name("site.route2");
 
-Route::get('/contact', [ContactController::class, 'contact']);
-
-Route::get('/contact/{name?}', function ($paramName = "Brenno") {
-    return $paramName;
+//Fallback
+Route::fallback(function () {
+    echo "Route not found. <a href='" . route("site.index") . "'>Home</a> to return to the home page.";
 });
