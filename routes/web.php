@@ -3,7 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\About\AboutController;
 use App\Http\Controllers\Contact\ContactController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\Tests\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,12 +32,15 @@ Route::prefix("/app")->group(function () {
     Route::get('/clients', function () {
         return "clients";
     })->name("app.clients");
-    Route::get('/supplier', function () {
-        return "supplier";
-    })->name("app.supplier");
+    Route::get('/supplier', [SupplierController::class, 'index'])->name("app.supplier");
     Route::get('/products', function () {
         return "products";
     })->name("app.products");
+});
+
+Route::prefix("/test")->group(function () {
+    Route::get('/parameters/{a}/{b}/{c}', [TestController::class, 'parameters'])->name("test.parameters");
+    Route::get('/noParam', [TestController::class, 'noParam'])->name("test.noParam");
 });
 
 // Redirect
